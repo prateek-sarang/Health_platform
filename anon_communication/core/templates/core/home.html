@@ -1,0 +1,22 @@
+<!-- core/templates/core/home.html -->
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome to the Anonymous Communication Platform</h1>
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}!</p>
+        <a href="{% url 'client_dashboard' %}" class="btn btn-primary">Go to Client Dashboard</a>
+        <a href="{% url 'doctor_dashboard' %}" class="btn btn-primary">Go to Doctor Dashboard</a>
+    {% else %}
+        <a href="{% url 'client_register' %}" class="btn btn-primary">Register as Client</a>
+        <a href="{% url 'doctor_register' %}" class="btn btn-primary">Register as Doctor</a>
+        <h2>Login</h2>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}
